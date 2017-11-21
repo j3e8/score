@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="mainApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui" />
+  <title>scorepad</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+  <script src="main.js" type="text/javascript"></script>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link href="main.css" rel="stylesheet" type="text/css">
+</head>
+<body ng-controller="mainController">
+  <div class="flex-row">
+    <div class="flex-cell fixed column" ng-repeat="p in players">
+      <div class="flex-column">
+        <div class="flex-cell fixed name" ng-click="editName($event, p)">
+          <div ng-hide="p.isEditing">
+            {{ p.name }}
+          </div>
+          <div ng-show="p.isEditing">
+            <input type="text" ng-model="p.name" ng-blur="saveName(p)" focus-when="p.isEditing">
+          </div>
+        </div>
+        <div class="flex-cell fixed score" ng-repeat="s in p.scores">
+          <div ng-hide="s.isEditing">
+            {{ s.value }}
+          </div>
+          <div ng-show="s.isEditing">
+            <input type="number" ng-model="s.value" ng-blur="saveScore(p, s)" focus-when="s.isEditing">
+          </div>
+        </div>
+        <div class="flex-cell" ng-click="addScore(p)"></div>
+        <div class="flex-cell fixed total">
+          {{ p.total }}
+        </div>
+      </div>
+    </div>
+    <div class="flex-cell fixed add-column" ng-click="">
+      <button ng-click="addPlayer()">+</button>
+    </div>
+  </div>
+</body>
+</html>
